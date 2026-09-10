@@ -62,3 +62,13 @@ resource "aws_iam_role_policy" "glue_s3" {
     }]
   })
 }
+
+resource "aws_athena_workgroup" "lakehouse" {
+  name = var.project
+  configuration {
+    enforce_workgroup_configuration = true
+    result_configuration {
+      output_location = "s3://${local.bucket_name}/athena-results/"
+    }
+  }
+}
